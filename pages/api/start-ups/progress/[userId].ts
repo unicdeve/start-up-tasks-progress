@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getUserProgresses } from 'utils';
+import { getUserProgresses, updateProgressTask } from 'utils';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	const userId = parseInt(req.query.userId.toString(), 10);
@@ -17,6 +17,24 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 		}
 
 		res.status(200).json({ userProgresses: progresses });
+	}
+
+	// UPDATE user startup progress
+	else if (method === 'PATCH') {
+		const { progressId, taskId, isChecked } = req.body;
+
+		const updatedTask = updateProgressTask(
+			userId,
+			progressId,
+			taskId,
+			isChecked
+		);
+
+		if (!updatedTask) {
+			return res.status(400).json({ error: 'Could update user progress task' });
+		}
+
+		res.status(200).json({ updatedTask });
 	}
 
 	// return error for all other HTTP verbs other than GET, PATCH
