@@ -27,7 +27,7 @@ export const StyledCheckbox = styled.label`
 		width: 0;
 
 		&:checked ~ .checkmark {
-			background-color: #2196f3;
+			background-color: #003087;
 			border: none;
 		}
 
