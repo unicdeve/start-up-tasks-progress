@@ -17,6 +17,16 @@ export const StyledHomePage = styled.div`
 		font-weight: 600;
 	}
 
+	.progresses {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+
+		li {
+			list-style: none;
+		}
+	}
+
 	@media (min-width: 768px) {
 		border: 3rem solid #f2f2f2;
 		padding: 2rem;

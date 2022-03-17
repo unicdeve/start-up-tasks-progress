@@ -1,5 +1,5 @@
+import DB from 'in-memory-data.json';
 import { InMemoryDatabase, IProgress, ITask } from 'types/start-up.type';
-import DB from '../in-memory-data.json';
 
 const inMemoryDatabase: InMemoryDatabase = DB;
 
