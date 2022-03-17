@@ -7,7 +7,7 @@
 				{
 					"id": 1,
 					"title": "Foundation",
-					"isCompleted": true,
+					"isCompleted": false,
 					"tasks": [
 						{
 							"id": 1,

@@ -15,12 +15,18 @@ export const getUserProgresses = (userId: number): IProgress[] | undefined => {
 	return userStartUp.progresses;
 };
 
+interface IUpdateProgressResponse {
+	id: number;
+	isCompleted: boolean;
+	task: ITask;
+}
+
 export const updateProgressTask = (
 	userId: number,
 	progressId: number,
 	taskId: number,
 	isChecked: boolean
-): ITask | undefined => {
+): IUpdateProgressResponse | undefined => {
 	const userProgresses = getUserProgresses(userId);
 
 	const progress = userProgresses?.find((p) => p.id === progressId);
@@ -32,8 +38,24 @@ export const updateProgressTask = (
 	const taskIndex = progress.tasks.findIndex((task) => task.id === taskId);
 
 	if (taskIndex !== -1) {
+		// update progress task
 		progress.tasks[taskIndex].isChecked = isChecked;
 
-		return progress.tasks[taskIndex];
+		// update progress by checking the number of tasks not completed is zero
+		const progressTasksNotChecked = progress.tasks.filter(
+			(task) => !task.isChecked
+		).length;
+
+		const isCompleted = progressTasksNotChecked === 0;
+
+		progress.isCompleted = isCompleted;
+
+		const updatedProgress = {
+			id: progress.id,
+			isCompleted,
+			task: progress.tasks[taskIndex],
+		};
+
+		return updatedProgress;
 	}
 };

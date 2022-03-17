@@ -23,18 +23,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	else if (method === 'PATCH') {
 		const { progressId, taskId, isChecked } = req.body;
 
-		const updatedTask = updateProgressTask(
+		const updatedProgress = updateProgressTask(
 			userId,
 			progressId,
 			taskId,
 			isChecked
 		);
 
-		if (!updatedTask) {
+		if (!updatedProgress) {
 			return res.status(400).json({ error: 'Could update user progress task' });
 		}
 
-		res.status(200).json({ updatedTask });
+		res.status(200).json({ updatedProgress });
 	}
 
 	// return error for all other HTTP verbs other than GET, PATCH
