@@ -1,0 +1,71 @@
+{
+	"startUps": [
+		{
+			"id": 1,
+			"userId": 1,
+			"progresses": [
+				{
+					"id": 1,
+					"title": "Foundation",
+					"isCompleted": true,
+					"tasks": [
+						{
+							"id": 1,
+							"label": "Setup virtual office",
+							"isChecked": true
+						},
+						{
+							"id": 2,
+							"label": "Setup mission & vision",
+							"isChecked": true
+						},
+						{
+							"id": 3,
+							"label": "Select business name",
+							"isChecked": false
+						},
+						{
+							"id": 4,
+							"label": "Buy domains",
+							"isChecked": false
+						}
+					]
+				},
+				{
+					"id": 2,
+					"title": "Discovery",
+					"isCompleted": false,
+					"tasks": [
+						{
+							"id": 1,
+							"label": "Create roadmap",
+							"isChecked": true
+						},
+						{
+							"id": 2,
+							"label": "Competitor analysis",
+							"isChecked": false
+						}
+					]
+				},
+				{
+					"id": 3,
+					"title": "Delivery",
+					"isCompleted": false,
+					"tasks": [
+						{
+							"id": 1,
+							"label": "Release marketing website",
+							"isChecked": false
+						},
+						{
+							"id": 2,
+							"label": "Release MVP",
+							"isChecked": false
+						}
+					]
+				}
+			]
+		}
+	]
+}
