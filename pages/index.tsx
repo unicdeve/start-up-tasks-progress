@@ -1,5 +1,5 @@
+import PageWrapper from 'components/page-wrapper/page-wrapper.comp';
 import type { NextPage } from 'next';
-import PageWrapper from '../components/page-wrapper/page-wrapper.comp';
 
 const Home: NextPage = () => {
 	return (
