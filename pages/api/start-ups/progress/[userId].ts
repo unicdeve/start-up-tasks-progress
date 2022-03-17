@@ -1,0 +1,26 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getUserProgresses } from 'utils';
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+	const userId = parseInt(req.query.userId.toString(), 10);
+
+	const { method } = req;
+
+	// GET user startup progresses
+	if (method === 'GET') {
+		const progresses = getUserProgresses(userId);
+
+		if (!progresses) {
+			return res
+				.status(404)
+				.json({ error: 'User start-up progress not found' });
+		}
+
+		res.status(200).json({ userProgresses: progresses });
+	}
+
+	// return error for all other HTTP verbs other than GET, PATCH
+	else {
+		return res.status(404).json({ error: 'route not found' });
+	}
+}
