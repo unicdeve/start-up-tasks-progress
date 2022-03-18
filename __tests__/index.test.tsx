@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { useHome } from 'hooks/useHome';
 import Home from 'pages/index';
 
@@ -11,6 +12,7 @@ jest.mock('components/checkbox/checkbox.comp', () => ({
 	default: ({ onChange, checked, disabled }: any) => (
 		<input
 			data-testid='checkbox'
+			type='checkbox'
 			onChange={onChange}
 			checked={checked}
 			disabled={disabled}
@@ -28,7 +30,7 @@ jest.mock('components/page-wrapper/page-wrapper.comp', () => ({
 jest.mock('components/phase-header/phase-header.comp', () => ({
 	__esModule: true,
 	default: ({ isCompleted }: any) => (
-		<div data-testid='phase-header'>{isCompleted}</div>
+		<div data-testid='phase-header'>{isCompleted.toString()}</div>
 	),
 }));
 
@@ -74,7 +76,7 @@ const fakeStartUpPhasesData = {
 describe('Home', () => {
 	beforeEach(() => {
 		(useHome as jest.Mock).mockReturnValue({
-			data: { startUpPhases: [] },
+			data: fakeStartUpPhasesData,
 			handleChange: jest.fn(),
 			randomFact: '',
 			loading: false,
@@ -121,13 +123,6 @@ describe('Home', () => {
 	});
 
 	it('should render correct number of phase headers', () => {
-		(useHome as jest.Mock).mockReturnValue({
-			data: fakeStartUpPhasesData,
-			handleChange: jest.fn(),
-			randomFact: '',
-			loading: false,
-		});
-
 		render(<Home />);
 
 		const phaseHeaders = screen.getAllByTestId('phase-header');
@@ -137,9 +132,18 @@ describe('Home', () => {
 	});
 
 	it('should render correct number of checkboxes', () => {
+		render(<Home />);
+
+		const checkboxes = screen.getAllByTestId('checkbox');
+		expect(checkboxes).toHaveLength(3);
+	});
+
+	it('should call handleChange when checkbox is click', () => {
+		const handleChangeMock = jest.fn();
+
 		(useHome as jest.Mock).mockReturnValue({
 			data: fakeStartUpPhasesData,
-			handleChange: jest.fn(),
+			handleChange: handleChangeMock,
 			randomFact: '',
 			loading: false,
 		});
@@ -147,6 +151,18 @@ describe('Home', () => {
 		render(<Home />);
 
 		const checkboxes = screen.getAllByTestId('checkbox');
-		expect(checkboxes).toHaveLength(3);
+
+		const phase1_task1 = checkboxes[0];
+		const phase1_task2 = checkboxes[1];
+
+		act(() => {
+			userEvent.click(phase1_task1);
+		});
+		expect(handleChangeMock).toHaveBeenCalledTimes(1);
+
+		act(() => {
+			userEvent.click(phase1_task2);
+		});
+		expect(handleChangeMock).toHaveBeenCalledTimes(2);
 	});
 });
