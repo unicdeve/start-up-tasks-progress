@@ -6,7 +6,7 @@ import type { NextPage } from 'next';
 import { StyledHomePage } from 'styles/pages/home.styled';
 
 const Home: NextPage = () => {
-	const { data, handleChange } = useHome();
+	const { data, handleChange, randomFact } = useHome();
 
 	if (!data) {
 		return <div>Loading...</div>;
@@ -49,6 +49,8 @@ const Home: NextPage = () => {
 						);
 					})}
 				</ul>
+
+				{randomFact ? <p>{randomFact}</p> : null}
 			</StyledHomePage>
 		</PageWrapper>
 	);
