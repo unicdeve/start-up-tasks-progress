@@ -35,6 +35,40 @@ jest.mock('components/spin/spin.comp', () => ({
 	default: () => <div data-testid='loading-spinner' />,
 }));
 
+const fakeStartUpPhasesData = {
+	startUpPhases: [
+		{
+			id: 1,
+			title: 'phase1',
+			isCompleted: false,
+			tasks: [
+				{
+					id: 1,
+					label: 'phase1 task1',
+					isChecked: true,
+				},
+				{
+					id: 2,
+					label: 'phase1 task2',
+					isChecked: false,
+				},
+			],
+		},
+		{
+			id: 2,
+			title: 'phase2',
+			isCompleted: false,
+			tasks: [
+				{
+					id: 1,
+					label: 'phase2 task1',
+					isChecked: false,
+				},
+			],
+		},
+	],
+};
+
 describe('Home', () => {
 	beforeEach(() => {
 		(useHome as jest.Mock).mockReturnValue({
@@ -82,5 +116,21 @@ describe('Home', () => {
 
 		const loadingSpinner = screen.getByTestId('loading-spinner');
 		expect(loadingSpinner).toBeInTheDocument();
+	});
+
+	it('should render correct number of phase headers', () => {
+		(useHome as jest.Mock).mockReturnValue({
+			data: fakeStartUpPhasesData,
+			handleChange: jest.fn(),
+			randomFact: '',
+			loading: false,
+		});
+
+		render(<Home />);
+
+		const phaseHeaders = screen.getAllByTestId('phase-header');
+		expect(phaseHeaders).toHaveLength(
+			fakeStartUpPhasesData.startUpPhases.length
+		);
 	});
 });
