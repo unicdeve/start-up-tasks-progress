@@ -69,4 +69,18 @@ describe('Home', () => {
 		const loadingSpinner = screen.getByTestId('loading-spinner');
 		expect(loadingSpinner).toBeInTheDocument();
 	});
+
+	it('should render loading spinner when fetching data', () => {
+		(useHome as jest.Mock).mockReturnValue({
+			data: undefined,
+			handleChange: jest.fn(),
+			randomFact: '',
+			loading: false,
+		});
+
+		render(<Home />);
+
+		const loadingSpinner = screen.getByTestId('loading-spinner');
+		expect(loadingSpinner).toBeInTheDocument();
+	});
 });
