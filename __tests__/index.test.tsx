@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { useHome } from 'hooks/useHome';
 import Home from 'pages/index';
 
@@ -38,14 +38,21 @@ jest.mock('components/spin/spin.comp', () => ({
 describe('Home', () => {
 	beforeEach(() => {
 		(useHome as jest.Mock).mockReturnValue({
-			data: undefined,
+			data: { startUpPhases: [] },
 			handleChange: jest.fn(),
 			randomFact: '',
-			loading: true,
+			loading: false,
 		});
 	});
 
 	it('should render without errors', () => {
 		render(<Home />);
+	});
+
+	it('should render correct page header', () => {
+		render(<Home />);
+
+		const header = screen.getByText('My startup phase');
+		expect(header).toBeInTheDocument();
 	});
 });
