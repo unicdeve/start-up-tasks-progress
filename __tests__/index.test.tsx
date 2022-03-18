@@ -55,4 +55,18 @@ describe('Home', () => {
 		const header = screen.getByText('My startup phase');
 		expect(header).toBeInTheDocument();
 	});
+
+	it('should render loading spinner when loading is true', () => {
+		(useHome as jest.Mock).mockReturnValue({
+			data: { startUpPhases: [] },
+			handleChange: jest.fn(),
+			randomFact: '',
+			loading: true,
+		});
+
+		render(<Home />);
+
+		const loadingSpinner = screen.getByTestId('loading-spinner');
+		expect(loadingSpinner).toBeInTheDocument();
+	});
 });
