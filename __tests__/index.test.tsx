@@ -27,7 +27,9 @@ jest.mock('components/page-wrapper/page-wrapper.comp', () => ({
 
 jest.mock('components/phase-header/phase-header.comp', () => ({
 	__esModule: true,
-	default: ({ title }: any) => <div data-testid='phase-header'>{title}</div>,
+	default: ({ isCompleted }: any) => (
+		<div data-testid='phase-header'>{isCompleted}</div>
+	),
 }));
 
 jest.mock('components/spin/spin.comp', () => ({
@@ -45,7 +47,7 @@ const fakeStartUpPhasesData = {
 				{
 					id: 1,
 					label: 'phase1 task1',
-					isChecked: true,
+					isChecked: false,
 				},
 				{
 					id: 2,
@@ -132,5 +134,19 @@ describe('Home', () => {
 		expect(phaseHeaders).toHaveLength(
 			fakeStartUpPhasesData.startUpPhases.length
 		);
+	});
+
+	it('should render correct number of checkboxes', () => {
+		(useHome as jest.Mock).mockReturnValue({
+			data: fakeStartUpPhasesData,
+			handleChange: jest.fn(),
+			randomFact: '',
+			loading: false,
+		});
+
+		render(<Home />);
+
+		const checkboxes = screen.getAllByTestId('checkbox');
+		expect(checkboxes).toHaveLength(3);
 	});
 });
