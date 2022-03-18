@@ -7,9 +7,17 @@ interface IProps {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 	name: string;
 	value: string;
+	disabled: boolean;
 }
 
-const Checkbox: FC<IProps> = ({ label, name, value, isChecked, onChange }) => (
+const Checkbox: FC<IProps> = ({
+	label,
+	name,
+	value,
+	isChecked,
+	onChange,
+	disabled,
+}) => (
 	<StyledCheckbox>
 		{label}
 		<input
@@ -18,6 +26,7 @@ const Checkbox: FC<IProps> = ({ label, name, value, isChecked, onChange }) => (
 			value={value}
 			checked={isChecked}
 			onChange={(e) => onChange(e)}
+			disabled={disabled}
 		/>
 		<span className='checkmark' />
 	</StyledCheckbox>

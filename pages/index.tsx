@@ -19,6 +19,9 @@ const Home: NextPage = () => {
 
 				<ul className='progresses'>
 					{data.userProgresses.map((progress, index) => {
+						const taskDisable =
+							index === 0 ? false : !data.userProgresses[index - 1].isCompleted;
+
 						return (
 							<li key={progress.id}>
 								<ProgressHeader
@@ -33,6 +36,7 @@ const Home: NextPage = () => {
 											key={task.id}
 											label={task.label}
 											isChecked={task.isChecked}
+											disabled={taskDisable}
 											name='name'
 											value='value'
 											onChange={(e) => {

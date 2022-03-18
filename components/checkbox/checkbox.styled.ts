@@ -34,6 +34,10 @@ export const StyledCheckbox = styled.label`
 		&:checked ~ .checkmark:after {
 			display: block;
 		}
+
+		&:disabled ~ .checkmark {
+			background-color: #ccc;
+		}
 	}
 
 	.checkmark {
