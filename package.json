@@ -8,6 +8,7 @@
 		"start": "next start",
 		"lint": "next lint",
 		"prepare": "yarn husky install",
+		"test": "jest",
 		"test:c": "jest --coverage",
 		"test:w": "jest --watch --coverage"
 	},
