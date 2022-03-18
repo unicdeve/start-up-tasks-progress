@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledProgressHeader = styled.div`
+export const StyledPhaseHeader = styled.div`
 	margin-top: 1.5rem;
 	margin-bottom: 1.5rem;
 	display: flex;
@@ -12,7 +12,7 @@ export const StyledProgressHeader = styled.div`
 		align-items: center;
 		gap: 1rem;
 
-		.progress-number {
+		.phase-number {
 			background-color: #000;
 			color: #fff;
 			width: 2rem;

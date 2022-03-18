@@ -3,7 +3,7 @@
 		{
 			"id": 1,
 			"userId": 1,
-			"progresses": [
+			"phases": [
 				{
 					"id": 1,
 					"title": "Foundation",

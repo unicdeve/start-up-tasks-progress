@@ -4,7 +4,7 @@ export interface ITask {
 	isChecked: boolean;
 }
 
-export interface IProgress {
+export interface IPhase {
 	id: number;
 	title: string;
 	isCompleted: boolean;
@@ -14,7 +14,7 @@ export interface IProgress {
 export interface IStartUp {
 	id: number;
 	userId: number;
-	progresses: IProgress[];
+	phases: IPhase[];
 }
 
 export interface InMemoryDatabase {

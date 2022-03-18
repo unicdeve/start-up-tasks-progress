@@ -1,6 +1,6 @@
 import Checkbox from 'components/checkbox/checkbox.comp';
 import PageWrapper from 'components/page-wrapper/page-wrapper.comp';
-import ProgressHeader from 'components/progress-header/progress-header.comp';
+import PhaseHeader from 'components/phase-header/phase-header.comp';
 import { useHome } from 'hooks/useHome';
 import type { NextPage } from 'next';
 import { StyledHomePage } from 'styles/pages/home.styled';
@@ -13,24 +13,24 @@ const Home: NextPage = () => {
 	}
 
 	return (
-		<PageWrapper title='My startup progress'>
+		<PageWrapper title='My startup phase'>
 			<StyledHomePage>
-				<h1>My startup progress</h1>
+				<h1>My startup phase</h1>
 
-				<ul className='progresses'>
-					{data.userProgresses.map((progress, index) => {
+				<ul className='phases'>
+					{data.startUpPhases.map((phase, index) => {
 						const taskDisable =
-							index === 0 ? false : !data.userProgresses[index - 1].isCompleted;
+							index === 0 ? false : !data.startUpPhases[index - 1].isCompleted;
 
 						return (
-							<li key={progress.id}>
-								<ProgressHeader
-									title={progress.title}
-									progressNumber={index + 1}
-									isCompleted={progress.isCompleted}
+							<li key={phase.id}>
+								<PhaseHeader
+									title={phase.title}
+									phaseNumber={index + 1}
+									isCompleted={phase.isCompleted}
 								/>
 
-								{progress.tasks.map((task) => {
+								{phase.tasks.map((task) => {
 									return (
 										<Checkbox
 											key={task.id}
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
 											name='name'
 											value='value'
 											onChange={(e) => {
-												handleChange(e.target.checked, progress.id, task.id);
+												handleChange(e.target.checked, phase.id, task.id);
 											}}
 										/>
 									);

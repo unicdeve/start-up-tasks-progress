@@ -1,9 +1,9 @@
 import DB from 'in-memory-data.json';
-import { InMemoryDatabase, IProgress, ITask } from 'types/start-up.type';
+import { InMemoryDatabase, IPhase, ITask } from 'types/start-up.type';
 
 const inMemoryDatabase: InMemoryDatabase = DB;
 
-export const getUserProgresses = (userId: number): IProgress[] | undefined => {
+export const getUserStartUpPhases = (userId: number): IPhase[] | undefined => {
 	const userStartUp = inMemoryDatabase.startUps.find(
 		(startUp) => startUp.userId === userId
 	);
@@ -12,50 +12,50 @@ export const getUserProgresses = (userId: number): IProgress[] | undefined => {
 		return;
 	}
 
-	return userStartUp.progresses;
+	return userStartUp.phases;
 };
 
-interface IUpdateProgressResponse {
+interface IUpdatePhaseResponse {
 	id: number;
 	isCompleted: boolean;
 	task: ITask;
 }
 
-export const updateProgressTask = (
+export const updatePhaseTask = (
 	userId: number,
-	progressId: number,
+	phaseId: number,
 	taskId: number,
 	isChecked: boolean
-): IUpdateProgressResponse | undefined => {
-	const userProgresses = getUserProgresses(userId);
+): IUpdatePhaseResponse | undefined => {
+	const startUpPhases = getUserStartUpPhases(userId);
 
-	const progress = userProgresses?.find((p) => p.id === progressId);
+	const phase = startUpPhases?.find((p) => p.id === phaseId);
 
-	if (!progress) {
+	if (!phase) {
 		return;
 	}
 
-	const taskIndex = progress.tasks.findIndex((task) => task.id === taskId);
+	const taskIndex = phase.tasks.findIndex((task) => task.id === taskId);
 
 	if (taskIndex !== -1) {
-		// update progress task
-		progress.tasks[taskIndex].isChecked = isChecked;
+		// update phase task
+		phase.tasks[taskIndex].isChecked = isChecked;
 
-		// update progress by checking the number of tasks not completed is zero
-		const progressTasksNotChecked = progress.tasks.filter(
+		// update phase by checking the number of tasks not completed is zero
+		const phaseTasksNotChecked = phase.tasks.filter(
 			(task) => !task.isChecked
 		).length;
 
-		const isCompleted = progressTasksNotChecked === 0;
+		const isCompleted = phaseTasksNotChecked === 0;
 
-		progress.isCompleted = isCompleted;
+		phase.isCompleted = isCompleted;
 
-		const updatedProgress = {
-			id: progress.id,
+		const updatedPhase = {
+			id: phase.id,
 			isCompleted,
-			task: progress.tasks[taskIndex],
+			task: phase.tasks[taskIndex],
 		};
 
-		return updatedProgress;
+		return updatedPhase;
 	}
 };

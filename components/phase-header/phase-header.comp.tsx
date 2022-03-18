@@ -1,28 +1,28 @@
 import CheckIcon from 'components/check-icon/check-icon.comp';
 import type { FC } from 'react';
-import { StyledProgressHeader } from './progress-header.styled';
+import { StyledPhaseHeader } from './phase-header.styled';
 
 interface IProps {
-	progressNumber: number;
+	phaseNumber: number;
 	title: string;
 	className?: string;
 	isCompleted: boolean;
 }
 
-const ProgressHeader: FC<IProps> = ({
+const PhaseHeader: FC<IProps> = ({
 	title,
 	className,
-	progressNumber,
+	phaseNumber,
 	isCompleted,
 }) => (
-	<StyledProgressHeader className={className}>
+	<StyledPhaseHeader className={className}>
 		<div className='number-title'>
-			<span className='progress-number'>{progressNumber}</span>
+			<span className='phase-number'>{phaseNumber}</span>
 			<h2>{title}</h2>
 		</div>
 
 		{isCompleted && <CheckIcon />}
-	</StyledProgressHeader>
+	</StyledPhaseHeader>
 );
 
-export default ProgressHeader;
+export default PhaseHeader;

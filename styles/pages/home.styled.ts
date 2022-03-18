@@ -17,7 +17,7 @@ export const StyledHomePage = styled.div`
 		font-weight: 600;
 	}
 
-	.progresses {
+	.phases {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
