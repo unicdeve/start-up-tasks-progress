@@ -3,15 +3,10 @@ import PageWrapper from 'components/page-wrapper/page-wrapper.comp';
 import ProgressHeader from 'components/progress-header/progress-header.comp';
 import { useHome } from 'hooks/useHome';
 import type { NextPage } from 'next';
-import { ChangeEvent } from 'react';
 import { StyledHomePage } from 'styles/pages/home.styled';
 
 const Home: NextPage = () => {
-	const { data } = useHome();
-
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.checked);
-	};
+	const { data, handleChange } = useHome();
 
 	if (!data) {
 		return <div>Loading...</div>;
@@ -23,24 +18,26 @@ const Home: NextPage = () => {
 				<h1>My startup progress</h1>
 
 				<ul className='progresses'>
-					{data.userProgresses.map((d, index) => {
+					{data.userProgresses.map((progress, index) => {
 						return (
-							<li key={d.id}>
+							<li key={progress.id}>
 								<ProgressHeader
-									title={d.title}
+									title={progress.title}
 									progressNumber={index + 1}
-									isCompleted={d.isCompleted}
+									isCompleted={progress.isCompleted}
 								/>
 
-								{d.tasks.map((task) => {
+								{progress.tasks.map((task) => {
 									return (
 										<Checkbox
 											key={task.id}
-											label='Setup virtual office'
+											label={task.label}
 											isChecked={task.isChecked}
 											name='name'
 											value='value'
-											onChange={handleChange}
+											onChange={(e) => {
+												handleChange(e.target.checked, progress.id, task.id);
+											}}
 										/>
 									);
 								})}
