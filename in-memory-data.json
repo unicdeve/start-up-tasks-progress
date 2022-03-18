@@ -39,7 +39,7 @@
 						{
 							"id": 1,
 							"label": "Create roadmap",
-							"isChecked": true
+							"isChecked": false
 						},
 						{
 							"id": 2,

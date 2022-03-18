@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { IProgress } from 'types/start-up.type';
 import { fetcher } from 'utils/fetcher';
 
@@ -15,20 +14,13 @@ interface IUseHome {
 
 export const useHome = (): IUseHome => {
 	const userId = 1;
-	const { data: fetchedData, error } = useSWR<IData>(
+	const { mutate } = useSWRConfig();
+	const { data, error } = useSWR<IData>(
 		`/api/start-ups/progress/${userId}`,
 		fetcher
 	);
 
-	const [data, setData] = useState(fetchedData);
-
-	useEffect(() => {
-		if (fetchedData) {
-			setData(fetchedData);
-		}
-	}, [fetchedData]);
-
-	const handleChange = (
+	const handleChange = async (
 		checked: boolean,
 		progressId: number,
 		taskId: number
@@ -48,12 +40,11 @@ export const useHome = (): IUseHome => {
 		}
 
 		const progress = currentProgresses[progressIndex];
-
 		if (!progress) {
 			return;
 		}
-		const taskIndex = progress.tasks.findIndex((task) => task.id === taskId);
 
+		const taskIndex = progress.tasks.findIndex((task) => task.id === taskId);
 		if (taskIndex !== -1) {
 			// update progress task
 			progress.tasks[taskIndex].isChecked = checked;
@@ -67,11 +58,23 @@ export const useHome = (): IUseHome => {
 
 			progress.isCompleted = isCompleted;
 			currentProgresses[progressIndex] = progress;
-			setData({ userProgresses: currentProgresses });
+
+			// update the local data immediately, but disable the revalidation
+			mutate(
+				`/api/start-ups/progress/${userId}`,
+				{ userProgresses: currentProgresses },
+				false
+			);
 
 			// Now, send data to API
+			await fetch(`/api/start-ups/progress/${userId}`, {
+				method: 'PATCH',
+				body: JSON.stringify({ progressId, taskId, isChecked: checked }),
+			});
+
+			mutate(`/api/start-ups/progress/${userId}`);
 		}
 	};
 
-	return { data: data, error, handleChange };
+	return { data, error, handleChange };
 };

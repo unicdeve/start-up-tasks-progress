@@ -21,7 +21,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 	// UPDATE user startup progress
 	else if (method === 'PATCH') {
-		const { progressId, taskId, isChecked } = req.body;
+		const { progressId, taskId, isChecked } = JSON.parse(req.body);
 
 		const updatedProgress = updateProgressTask(
 			userId,
