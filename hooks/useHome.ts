@@ -12,6 +12,7 @@ interface IUseHome {
 	error: any;
 	handleChange: (checked: boolean, phaseId: number, taskId: number) => void;
 	randomFact?: string;
+	loading: boolean;
 }
 
 export const useHome = (): IUseHome => {
@@ -20,15 +21,19 @@ export const useHome = (): IUseHome => {
 		`/api/start-ups/phase/${userId}`,
 		fetcher
 	);
+	const [loading, setLoading] = useState<boolean>(false);
 
-	const [randomFact, setRandomFact] = useState<string>();
+	const [randomFact, setRandomFact] = useState<string>('');
 
 	useEffect(() => {
 		if (data?.startUpPhases[data.startUpPhases.length - 1].isCompleted) {
+			setLoading(true);
+
 			fetch('https://uselessfacts.jsph.pl/random.json')
 				.then((data) => data.json())
 				.then((data) => {
 					setRandomFact(data.text);
+					setLoading(false);
 				});
 		} else {
 			setRandomFact('');
@@ -52,5 +57,5 @@ export const useHome = (): IUseHome => {
 		}
 	};
 
-	return { data, error, handleChange, randomFact };
+	return { data, error, handleChange, randomFact, loading };
 };

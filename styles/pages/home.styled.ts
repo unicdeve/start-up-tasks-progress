@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledHomePage = styled.div`
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	max-width: 600px;
@@ -25,6 +26,12 @@ export const StyledHomePage = styled.div`
 		li {
 			list-style: none;
 		}
+	}
+
+	.spinner {
+		position: absolute;
+		bottom: 0;
+		right: 0;
 	}
 
 	@media (min-width: 768px) {

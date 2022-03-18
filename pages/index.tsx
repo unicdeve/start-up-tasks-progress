@@ -1,15 +1,16 @@
 import Checkbox from 'components/checkbox/checkbox.comp';
 import PageWrapper from 'components/page-wrapper/page-wrapper.comp';
 import PhaseHeader from 'components/phase-header/phase-header.comp';
+import Spin from 'components/spin/spin.comp';
 import { useHome } from 'hooks/useHome';
 import type { NextPage } from 'next';
 import { StyledHomePage } from 'styles/pages/home.styled';
 
 const Home: NextPage = () => {
-	const { data, handleChange, randomFact } = useHome();
+	const { data, handleChange, randomFact, loading } = useHome();
 
 	if (!data) {
-		return <div>Loading...</div>;
+		return <Spin />;
 	}
 
 	return (
@@ -51,6 +52,8 @@ const Home: NextPage = () => {
 				</ul>
 
 				{randomFact ? <p>{randomFact}</p> : null}
+
+				{loading && <Spin className='spinner' />}
 			</StyledHomePage>
 		</PageWrapper>
 	);
