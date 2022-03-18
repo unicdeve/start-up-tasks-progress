@@ -30,8 +30,9 @@ export const StyledHomePage = styled.div`
 
 	.spinner {
 		position: absolute;
-		bottom: 0;
-		right: 0;
+		top: calc(50% - 16px);
+		right: calc(50% - 16px);
+		z-index: 10;
 	}
 
 	@media (min-width: 768px) {

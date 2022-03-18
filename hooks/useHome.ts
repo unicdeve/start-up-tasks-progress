@@ -46,12 +46,14 @@ export const useHome = (): IUseHome => {
 		taskId: number
 	) => {
 		try {
+			setLoading(true);
 			await fetch(`/api/start-ups/phase/${userId}`, {
 				method: 'PATCH',
 				body: JSON.stringify({ phaseId, taskId, isChecked: checked }),
 			});
 
 			mutate();
+			setLoading(false);
 		} catch (e) {
 			console.log(e);
 		}
